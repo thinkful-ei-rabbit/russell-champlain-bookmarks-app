@@ -1,12 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>My Bookmarks</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/4aa3e89ed3.js" crossorigin="anonymous"></script>
+    <title>BOOKMARKit</title>
 </head>
+
 <body>
-  <div id="root"></div>
+    <main id="root">
+        <header>
+            <h1>BOOKMARKit</h1>
+        </header>
+        
+        <section class="btn-cont">
+            <div><span class="add-bkmk"><button>+ NEW<i id="bkmk-icon" class="fas fa-bookmark"></i></button></span>
+            </div>
+            <div><span class="filter"><select>Filter By</select></span></div>
+        </section>
+
+        <section class="bkmks"></section>
+    </main>
 </body>
+
 </html>
