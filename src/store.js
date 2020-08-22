@@ -1,13 +1,4 @@
-const bookmarks = [
-    {
-        id: '',
-        title: '',
-        rating: 0,
-        url: '',
-        description: '',
-        expanded: false
-    }
-];
+const bookmarks = [];
 let adding = false;
 let error = null;
 let filter = 0;

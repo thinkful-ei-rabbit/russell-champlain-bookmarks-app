@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <script src="https://kit.fontawesome.com/4aa3e89ed3.js" crossorigin="anonymous"></script>
     <title>BOOKMARKit</title>
 </head>
@@ -15,13 +14,24 @@
             <h1>BOOKMARKit</h1>
         </header>
         
-        <section class="btn-cont">
-            <div><span class="add-bkmk"><button>+ NEW<i id="bkmk-icon" class="fas fa-bookmark"></i></button></span>
-            </div>
-            <div><span class="filter"><select>Filter By</select></span></div>
+        <section class="sub-container">
+            <div class="button-container"><span class="add-bookmark"><button>+ NEW<i id="bkmk-icon" class="fas fa-bookmark"></i></button></span></div>
+            <div class="filter"><select name="filter" id="filter">
+                <option value="0">Filter By Rating</option>
+                <option value="1">Show Only 1 Star Ratings</option>
+                <option value="2">Show Only 2 Star Ratings</option>
+                <option value="3">Show Only 3 Star Ratings</option>
+                <option value="4">Show Only 4 Star Ratings</option>
+                <option value="5">Show Only 5 Star Ratings</option>
+            </select></div>
         </section>
 
-        <section class="bkmks"></section>
+        <div class="form-container"></div>
+        <div class="error-container"></div>
+
+        <section class="bookmark-section">
+            <div class="bookmark-list-container"></div>
+        </section>
     </main>
 </body>
 

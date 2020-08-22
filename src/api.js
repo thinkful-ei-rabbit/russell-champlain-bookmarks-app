@@ -26,8 +26,8 @@ const getBookmarks = function () {
     return listApiFetch(`${BASE_URL}/bookmarks`);
 };
 
-const createBookmark = function (name) {
-    const newBookmark = JSON.stringify({ name });
+const createBookmark = function (bookmark) {
+    const newBookmark = JSON.stringify(bookmark);
     return listApiFetch(`${BASE_URL}/bookmarks`, {
         method: 'POST',
         headers: {
