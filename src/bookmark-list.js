@@ -79,40 +79,6 @@ const handleNewBookmarkClicked = function () {
     });
 };
 
-
-//Tried to convert rating value to returning star icons
-// const generateStars = function (bookmark) {
-//     if (bookmark.rating.value === 1) {
-//         return `
-//         <i class='fas fa-star'></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
-//         `;
-//     }
-//     if (bookmark.rating.value === 2) {
-//         return `
-//         <i class='fas fa-star'></i><i class='fas fa-star'></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
-//         `;
-//     }
-//     if (bookmark.rating.value === 3) {
-//         return `
-//         <i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class="far fa-star"></i><i class="far fa-star"></i>
-//         `;
-//     }
-//     if (bookmark.rating.value === 4) {
-//         return `
-//         <i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class="far fa-star"></i>
-//         `;
-//     }
-//     if (bookmark.rating.value === 5) {
-//         return `
-//         <i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>
-//         `;
-//     } else {
-//         return `
-//         <i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
-//         `;
-//     }
-// };
-
 const generateBookmarkElement = function (bookmark) {
     let bookmarkName = bookmark.title;
     let bookmarkRating = bookmark.rating
@@ -144,7 +110,7 @@ const handleNewBookmarkSubmit = function () {
             title: event.target.title.value,
             url: event.target.url.value,
             desc: event.target.desc.value,
-            rating: event.target.rating.value, //needs to be corrected
+            rating: event.target.rating.value,
             expanded: false
         };
         api.createBookmark(newBookmarkName)
@@ -174,15 +140,15 @@ const getIdFromElement = function (bookmark) {
 const generateExpandView = function (bookmark) {
     let bookmarkName = bookmark.title;
     let bookmarkDesc = bookmark.desc;
-    let bookmarkURL = bookmark.url
+    let bookmarkURL = bookmark.url;
     return `
         <ul class="js-bookmark-list">
         <div class="list-element-container"><li class="js-bookmark-element" data-bookmark-id="${bookmark.id}">
             ${bookmarkName}
             <div class="icons"><i id="icon edit" class="fas fa-edit"></i><i id="icon delete" class="fas fa-trash-alt"></i></div>
             <div class="expand-cont">
-                    <button onclick="location.href=${bookmarkURL}" type="button">Visit Site</button>
                     <p class="description">${bookmarkDesc}</p>
+                    <button onclick="location.href=${bookmarkURL}" type="button">Visit Site</button>
                 </div>
         </li></div>
         </ul>
@@ -190,34 +156,32 @@ const generateExpandView = function (bookmark) {
 };
 
 const handleBookmarkClicked = function () {
-    const expandedView = generateExpandView();
-    $('.list-element-container').on('click', '.js-bookmark-element', function () {
-        store.toggleExpandBookmark(id);
+    $('.bookmark-list-container').on('click', '.js-bookmark-element', function (event) {
+        const getBookmarkId = getIdFromElement(event.currentTarget);
+        let bookmark = '';
+        for ( let i = 0; i < store.bookmarks.length; i++) {
+            if (store.bookmarks[i].id === getBookmarkId) {
+                bookmark = store.bookmarks[i];
+            }
+        }
+        const bookmarkName = bookmark.title;
+        const bookmarkRating = bookmark.rating;
+        const expandedView = generateExpandView(bookmark);
+        store.toggleExpandBookmark(bookmark.id);
         if (store.bookmarks.expanded === true) {
             $('.bookmark-list-container').html(expandedView);
-        };
+        } else {
+            $('bookmark-list-container').html(`
+            <ul class="js-bookmark-list">
+                <div class="list-element-container"><li class="js-bookmark-element" data-bookmark-id="${bookmark.id}">
+                    ${bookmarkName}
+                    <div class="rating">${bookmarkRating}</div>
+                </li></div>
+            </ul>
+            `);
+        }
     });
 };
-
-// const handleNewBookmarkClicked = function () {
-//     const bookmarkForm = generateBookmarkForm();
-//     const generateCancel = function () {
-//         return `
-//         <button>Cancel</button>
-//         `;
-//     };
-//         $('.button-container').on('click', '.add-bookmark', function () {
-//             store.toggleAdding();
-//             if (store.adding === true) {
-//             $('.form-container').html(bookmarkForm);
-//             $('.add-bookmark').html(generateCancel());
-//             } else {
-//                 $('.form-container').empty();
-//                 $('.add-bookmark').html(`
-//                 <button>+ NEW<i id="bkmk-icon" class="fas fa-bookmark"></i></button>`);
-//             };
-//         });
-// };
 
 const handleDeleteBookmarkClicked = function () {
     $('.js-bookmark-list').on('click', '.js-bookmark-delete', event => {
@@ -280,3 +244,41 @@ export default {
     render,
     bindEventListeners,
 };
+
+
+
+
+
+
+//Tried to convert rating value to returning star icons
+// const generateStars = function (bookmark) {
+//     if (bookmark.rating.value === 1) {
+//         return `
+//         <i class='fas fa-star'></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+//         `;
+//     }
+//     if (bookmark.rating.value === 2) {
+//         return `
+//         <i class='fas fa-star'></i><i class='fas fa-star'></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+//         `;
+//     }
+//     if (bookmark.rating.value === 3) {
+//         return `
+//         <i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class="far fa-star"></i><i class="far fa-star"></i>
+//         `;
+//     }
+//     if (bookmark.rating.value === 4) {
+//         return `
+//         <i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class="far fa-star"></i>
+//         `;
+//     }
+//     if (bookmark.rating.value === 5) {
+//         return `
+//         <i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i><i class='fas fa-star'></i>
+//         `;
+//     } else {
+//         return `
+//         <i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+//         `;
+//     }
+// };
