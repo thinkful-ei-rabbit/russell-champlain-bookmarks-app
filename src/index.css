@@ -191,6 +191,14 @@ li {
   display: flex;
   font-size: large;
   justify-content: space-between;
+  align-items: center;
+}
+
+.js-bookmark-element-expanded {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /* #icon {

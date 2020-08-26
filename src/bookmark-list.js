@@ -141,17 +141,18 @@ const generateExpandView = function (bookmark) {
     let bookmarkName = bookmark.title;
     let bookmarkDesc = bookmark.desc;
     let bookmarkURL = bookmark.url;
+    const handleVisitSiteButton = function () {
+        // $('.site-button').on('click', ${ bookmarkURL })
+    }
     return `
-        <ul class="js-bookmark-list">
-        <div class="list-element-container"><li class="js-bookmark-element" data-bookmark-id="${bookmark.id}">
-            ${bookmarkName}
+        <li class="js-bookmark-element-expanded" data-bookmark-id="${bookmark.id}">
+            <h2>${bookmarkName}</h2>
             <div class="icons"><i id="icon edit" class="fas fa-edit"></i><i id="icon delete" class="fas fa-trash-alt"></i></div>
             <div class="expand-cont">
                     <p class="description">${bookmarkDesc}</p>
-                    <button onclick="location.href=${bookmarkURL}" type="button">Visit Site</button>
+                    <button class="site-button" type="button">Visit Site</button>
                 </div>
-        </li></div>
-        </ul>
+        </li>
             `;
 };
 
@@ -159,7 +160,7 @@ const handleBookmarkClicked = function () {
     $('.bookmark-list-container').on('click', '.js-bookmark-element', function (event) {
         const getBookmarkId = getIdFromElement(event.currentTarget);
         let bookmark = '';
-        for ( let i = 0; i < store.bookmarks.length; i++) {
+        for (let i = 0; i < store.bookmarks.length; i++) {
             if (store.bookmarks[i].id === getBookmarkId) {
                 bookmark = store.bookmarks[i];
             }
@@ -169,16 +170,7 @@ const handleBookmarkClicked = function () {
         const expandedView = generateExpandView(bookmark);
         store.toggleExpandBookmark(bookmark.id);
         if (store.bookmarks.expanded === true) {
-            $('.bookmark-list-container').html(expandedView);
-        } else {
-            $('bookmark-list-container').html(`
-            <ul class="js-bookmark-list">
-                <div class="list-element-container"><li class="js-bookmark-element" data-bookmark-id="${bookmark.id}">
-                    ${bookmarkName}
-                    <div class="rating">${bookmarkRating}</div>
-                </li></div>
-            </ul>
-            `);
+            $('.js-bookmark-element').html(expandedView);
         }
     });
 };
