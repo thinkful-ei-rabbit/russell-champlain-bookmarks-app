@@ -141,16 +141,13 @@ const generateExpandView = function (bookmark) {
     let bookmarkName = bookmark.title;
     let bookmarkDesc = bookmark.desc;
     let bookmarkURL = bookmark.url;
-    const handleVisitSiteButton = function () {
-        // $('.site-button').on('click', ${ bookmarkURL })
-    }
     return `
         <li class="js-bookmark-element-expanded" data-bookmark-id="${bookmark.id}">
             <h2>${bookmarkName}</h2>
             <div class="icons"><i id="icon edit" class="fas fa-edit"></i><i id="icon delete" class="fas fa-trash-alt"></i></div>
             <div class="expand-cont">
                     <p class="description">${bookmarkDesc}</p>
-                    <button class="site-button" type="button">Visit Site</button>
+                    <button class="site-button" type="button"><a href="${bookmarkURL}" target="_blank">Visit Site</a></button>
                 </div>
         </li>
             `;
@@ -170,13 +167,19 @@ const handleBookmarkClicked = function () {
         const expandedView = generateExpandView(bookmark);
         store.toggleExpandBookmark(bookmark.id);
         if (store.bookmarks.expanded === true) {
-            $('.js-bookmark-element').html(expandedView);
+            $(event.target).html(expandedView);
+        } else {
+            $(event.target).html(
+                `
+                ${bookmarkName}
+                <div class="rating">${bookmarkRating}</div>
+            `);
         }
     });
 };
 
 const handleDeleteBookmarkClicked = function () {
-    $('.js-bookmark-list').on('click', '.js-bookmark-delete', event => {
+    $('.js-bookmaark-element-expanded').on('click', '.delete', event => {
         const id = getIdFromElement(event.currentTarget);
         api.deleteBookmark(id)
             .then(() => {
